@@ -20,6 +20,10 @@ var isForced = require('../internals/is-forced');
   options.enumerable  - export as enumerable property
   options.noTargetGet - prevent calling a getter on target
 */
+
+// REVIEW[epic=includes] core-js中的导出函数
+
+
 module.exports = function (options, source) {
   var TARGET = options.target;
   var GLOBAL = options.global;
@@ -30,6 +34,7 @@ module.exports = function (options, source) {
   } else if (STATIC) {
     target = global[TARGET] || setGlobal(TARGET, {});
   } else {
+    // target被赋值
     target = (global[TARGET] || {}).prototype;
   }
   if (target) for (key in source) {
@@ -37,7 +42,10 @@ module.exports = function (options, source) {
     if (options.noTargetGet) {
       descriptor = getOwnPropertyDescriptor(target, key);
       targetProperty = descriptor && descriptor.value;
-    } else targetProperty = target[key];
+    } else {
+      targetProperty = target[key];
+      console.log('targetProperty', targetProperty)
+    };
     FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
     // contained in target
     if (!FORCED && targetProperty !== undefined) {
@@ -48,7 +56,7 @@ module.exports = function (options, source) {
     if (options.sham || (targetProperty && targetProperty.sham)) {
       createNonEnumerableProperty(sourceProperty, 'sham', true);
     }
-    // extend global
+    // extend global 通过createNonEnumerableProperty方法将 includes方法注入 global
     redefine(target, key, sourceProperty, options);
   }
 };

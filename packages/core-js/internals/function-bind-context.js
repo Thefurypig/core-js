@@ -1,7 +1,8 @@
 var aFunction = require('../internals/a-function');
-
+// REVIEW[epic=includes,seq=6] 取出全局的includes方法
 // optional / simple context binding
 module.exports = function (fn, that, length) {
+  // fn:Function.call that:includes
   aFunction(fn);
   if (that === undefined) return fn;
   switch (length) {

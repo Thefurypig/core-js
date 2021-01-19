@@ -6,7 +6,6 @@ var path = require('../internals/path');
 var bind = require('../internals/function-bind-context');
 var createNonEnumerableProperty = require('../internals/create-non-enumerable-property');
 var has = require('../internals/has');
-
 var wrapConstructor = function (NativeConstructor) {
   var Wrapper = function (a, b, c) {
     if (this instanceof NativeConstructor) {
@@ -35,6 +34,7 @@ var wrapConstructor = function (NativeConstructor) {
   options.enumerable  - export as enumerable property
   options.noTargetGet - prevent calling a getter on target
 */
+// REVIEW[epic=includes] core-js-pure 中的导出函数
 module.exports = function (options, source) {
   var TARGET = options.target;
   var GLOBAL = options.global;

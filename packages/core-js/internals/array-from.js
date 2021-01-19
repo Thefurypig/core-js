@@ -6,9 +6,10 @@ var isArrayIteratorMethod = require('../internals/is-array-iterator-method');
 var toLength = require('../internals/to-length');
 var createProperty = require('../internals/create-property');
 var getIteratorMethod = require('../internals/get-iterator-method');
-
 // `Array.from` method implementation
 // https://tc39.es/ecma262/#sec-array.from
+// REVIEW[epic=from] 记录 from方法实现的函数
+
 module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
   var O = toObject(arrayLike);
   var C = typeof this == 'function' ? this : Array;

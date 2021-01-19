@@ -10,9 +10,10 @@ var enforceInternalState = InternalStateModule.enforce;
 var TEMPLATE = String(String).split('String');
 
 (module.exports = function (O, key, value, options) {
-  var unsafe = options ? !!options.unsafe : false;
-  var simple = options ? !!options.enumerable : false;
-  var noTargetGet = options ? !!options.noTargetGet : false;
+  // target, key, sourceProperty, options
+  var unsafe = options ? !!options.unsafe : false; // false
+  var simple = options ? !!options.enumerable : false; // false
+  var noTargetGet = options ? !!options.noTargetGet : false; // false
   var state;
   if (typeof value == 'function') {
     if (typeof key == 'string' && !has(value, 'name')) {
